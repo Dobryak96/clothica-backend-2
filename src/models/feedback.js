@@ -1,4 +1,5 @@
 import {Schema, model} from 'mongoose';
+import './good.js';
 
 const feedbackSchema = new Schema(
     {
@@ -27,7 +28,7 @@ const feedbackSchema = new Schema(
         },
         productId:{
           type: Schema.Types.ObjectId,
-          ref: "Good",
+          ref: "good",
           required:true,
         }
     },
