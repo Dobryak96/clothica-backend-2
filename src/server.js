@@ -10,7 +10,10 @@ import { errorHandler } from "./middlewares/errorHandler.js";
 import authRouter from "./routes/authRouter.js";
 import usersRouter from "./routes/usersRouter.js";
 import categoriesRouter from "./routes/categoriesRouter.js";
-import storiesRouter from "./routes/storiesRouter.js";
+import goodsRouter from "./routes/goodsRouter.js";
+import ordersRouter from "./routes/ordersRouter.js";
+import feedbacksRouter from "./routes/feedbacksRouter.js";
+import subscriptionsRouter from "./routes/subscriptionsRouter.js";
 
 const PORT = process.env.PORT ?? 3000;
 
@@ -24,7 +27,10 @@ app.use(cookieParser());
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/categories', categoriesRouter);
-app.use('/api/stories', storiesRouter);
+app.use('/api/goods', goodsRouter);
+app.use('/api/orders', ordersRouter);
+app.use('/api/feedbacks', feedbacksRouter);
+app.use('/api/subscriptions', subscriptionsRouter);
 
 app.use(notFoundHandler);
 app.use(errors());
