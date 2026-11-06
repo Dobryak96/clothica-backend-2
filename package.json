@@ -1,0 +1,37 @@
+{
+  "name": "clothica-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ivan-pes/Clothica-2.git"
+  },
+  "keywords": [],
+  "author": "Ivan Korolov <ivankorol453@gmail.com>",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Ivan-pes/Clothica-2/issues"
+  },
+  "homepage": "https://github.com/Ivan-pes/Clothica-2#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "celebrate": "^16.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.9",
+    "express": "^5.3.0",
+    "helmet": "^8.3.0",
+    "http-errors": "^2.0.1",
+    "mongoose": "^9.12.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
