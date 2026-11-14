@@ -4,6 +4,14 @@ export const createFeedback = async (req, res, next) => {
   try {
     const { author, description, rate, category, date, productId } = req.body;
 
+    if (!author || !description || !rate || !productId) {
+      return res.status(400).json({
+        status: 'error',
+        code: 400,
+        message: "Будь ласка, заповніть усі обов'язкові поля (author, description, rate, productId)",
+      });
+    }
+
     const newFeedback = await Feedback.create({
       author,
       description,
@@ -13,7 +21,7 @@ export const createFeedback = async (req, res, next) => {
       productId,
     });
 
-    res.status(201).json({
+    return res.status(201).json({
       status: 'success',
       code: 201,
       data: {
@@ -21,6 +29,13 @@ export const createFeedback = async (req, res, next) => {
       },
     });
   } catch (error) {
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({
+        status: 'error',
+        code: 400,
+        message: error.message,
+      });
+    }
     next(error);
   }
 };
