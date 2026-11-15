@@ -1,6 +1,7 @@
 import { Joi, Segments } from "celebrate";
 import { SIZES } from "../constants/goods.js";
 import { ORDER_STATUSES } from "../constants/orders.js";
+import { uaPhone } from "./phoneValidation.js";
 
 export const createOrderSchema = {
   [Segments.BODY]: Joi.object({
@@ -18,11 +19,7 @@ export const createOrderSchema = {
       .required(),
     firstName: Joi.string().trim().min(2).max(32).required(),
     lastName: Joi.string().trim().min(2).max(32).required(),
-    phone: Joi.string()
-      .trim()
-      .pattern(/^\+?[\d\s()-]{10,20}$/)
-      .required()
-      .messages({ "string.pattern.base": "Невірний формат номера телефону" }),
+    phone: uaPhone().required(),
     city: Joi.string().trim().min(2).max(64).required(),
     postOffice: Joi.string().trim().min(1).max(64).required(),
     comment: Joi.string().trim().max(500).allow(""),
