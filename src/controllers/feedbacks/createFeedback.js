@@ -28,14 +28,14 @@ export const createFeedback = async (req, res, next) => {
         feedback: newFeedback,
       },
     });
-  } catch (error) {
-    if (error.name === 'ValidationError') {
-      return res.status(400).json({
-        status: 'error',
-        code: 400,
-        message: error.message,
-      });
+} catch (error) {
+    if (error.name === 'ValidationError' || error.name === 'CastError') {
+        return res.status(400).json({
+            status: 'error',
+            code: 400,
+            message: error.message,
+        });
     }
     next(error);
-  }
+}
 };
