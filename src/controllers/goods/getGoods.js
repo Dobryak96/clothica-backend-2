@@ -1,4 +1,5 @@
 import { GoodModel } from "../../models/good.js";
+import { getGoodsRatings } from "../../services/getGoodsRatings.js";
 
 export const getGoods = async (req, res, next) => {
   try {
@@ -24,7 +25,15 @@ export const getGoods = async (req, res, next) => {
 
     const totalPages = Math.ceil(totalItems / perPage);
 
-    res.status(200).json({ page, perPage, totalItems, totalPages, goods });
+    const ratings = await getGoodsRatings(goods.map((good) => good._id));
+    const goodsWithRating = goods.map((good) => ({
+      ...good.toJSON(),
+      rating: ratings.get(String(good._id)) ?? 0,
+    }));
+
+    res
+      .status(200)
+      .json({ page, perPage, totalItems, totalPages, goods: goodsWithRating });
   } catch (error) {
     next(error);
   }

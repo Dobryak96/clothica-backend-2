@@ -160,7 +160,6 @@ paths:
     get:
       tags: [Goods]
       summary: Товар за ID
-      description: В розробці.
       parameters:
         - in: path
           name: goodId
@@ -172,6 +171,7 @@ paths:
           content:
             application/json:
               schema: { $ref: '#/components/schemas/Good' }
+        '400': { $ref: '#/components/responses/ValidationError' }
         '404': { $ref: '#/components/responses/NotFound' }
 
   /api/orders:
@@ -240,12 +240,19 @@ paths:
     get:
       tags: [Feedbacks]
       summary: Список останніх відгуків
+      parameters:
+        - in: query
+          name: productId
+          required: false
+          description: Відгуки лише для вказаного товару
+          schema: { $ref: '#/components/schemas/ObjectId' }
       responses:
         '200':
           description: Останні 10 відгуків
           content:
             application/json:
               schema: { $ref: '#/components/schemas/FeedbacksResponse' }
+        '400': { $ref: '#/components/responses/ValidationError' }
     post:
       tags: [Feedbacks]
       summary: Створення відгуку
@@ -383,6 +390,7 @@ components:
         feedbacks:
           type: array
           items: { $ref: '#/components/schemas/ObjectId' }
+        rating: { type: number, example: 4.5, description: 'Середня оцінка за відгуками, 0 якщо відгуків немає' }
 
     GoodsResponse:
       allOf:

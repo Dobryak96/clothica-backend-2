@@ -5,6 +5,12 @@ const sizesPattern = new RegExp(
   `^(${SIZES.join("|")})(,(${SIZES.join("|")}))*$`,
 );
 
+export const getGoodByIdSchema = {
+  [Segments.PARAMS]: Joi.object({
+    goodId: Joi.string().hex().length(24).required(),
+  }),
+};
+
 export const getGoodsSchema = {
   [Segments.QUERY]: Joi.object({
     page: Joi.number().integer().min(1).default(1),

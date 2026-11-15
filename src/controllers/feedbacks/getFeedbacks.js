@@ -2,7 +2,10 @@ import { Feedback } from '../../models/feedback.js';
 
 export const getFeedbacks = async (req, res, next) => {
     try {
-        const feedbacks = await Feedback.find()
+        const { productId } = req.query;
+        const filter = productId ? { productId } : {};
+
+        const feedbacks = await Feedback.find(filter)
             .sort({ date: -1 })
             .limit(10)
             .populate('productId', 'name');
