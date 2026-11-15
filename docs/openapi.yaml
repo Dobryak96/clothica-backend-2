@@ -248,7 +248,7 @@ paths:
     post:
       tags: [Feedbacks]
       summary: Створення відгуку
-      description: В розробці.
+      description: Категорія та дата відгуку встановлюються сервером автоматично.
       requestBody:
         required: true
         content:
@@ -261,6 +261,7 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/Feedback' }
         '400': { $ref: '#/components/responses/ValidationError' }
+        '404': { $ref: '#/components/responses/NotFound' }
 
   /api/subscriptions:
     post:
