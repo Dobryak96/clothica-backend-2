@@ -9,6 +9,17 @@ export const updateCurrentUser = async (req, res, next) => {
       throw createHttpError(401, 'Not authenticated');
     }
 
+    if (req.body.phone) {
+      const phoneOwner = await UserModel.findOne({
+        phone: req.body.phone,
+        _id: { $ne: userId },
+      });
+
+      if (phoneOwner) {
+        throw createHttpError(409, 'Phone number is already in use');
+      }
+    }
+
     const user = await UserModel.findByIdAndUpdate(userId, req.body, {
       returnDocument: 'after',
       runValidators: true,
