@@ -27,6 +27,10 @@ const swaggerDocument = YAML.parse(
 const app = express();
 
 app.use(express.json({ limit: "5mb" }));
+app.use((req, res, next) => {
+  req.body ??= {};
+  next();
+});
 app.use(cors({ methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"] }));
 app.get("/api-docs.json", (req, res) => res.json(swaggerDocument));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
