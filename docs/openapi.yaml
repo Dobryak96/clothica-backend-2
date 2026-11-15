@@ -461,7 +461,7 @@ components:
       properties:
         name: { type: string, minLength: 2, maxLength: 32 }
         lastName: { type: string, minLength: 2, maxLength: 32 }
-        phone: { type: string, pattern: '^\+?[\d\s()-]{10,20}$', example: '+380 67 123 45 67' }
+        phone: { type: string, description: 'Формат +380XXXXXXXXX. Пробіли, дужки й дефіси прибираються, номер зберігається як +380XXXXXXXXX.', example: '+380671234567' }
         city: { type: string, minLength: 2, maxLength: 64 }
         postOffice: { type: string, minLength: 1, maxLength: 64 }
 
@@ -500,7 +500,7 @@ components:
           items: { $ref: '#/components/schemas/OrderItem' }
         firstName: { type: string }
         lastName: { type: string }
-        phone: { type: string }
+        phone: { type: string, description: 'Формат +380XXXXXXXXX. Пробіли, дужки й дефіси прибираються, номер зберігається як +380XXXXXXXXX.', example: '+380671234567' }
         city: { type: string }
         postOffice: { type: string }
         comment: { type: string }
