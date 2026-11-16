@@ -1,6 +1,10 @@
 import { HttpError } from "http-errors";
 
 export const errorHandler = (err, req, res, next) => {
+  if (err.type === "entity.parse.failed") {
+    return res.status(400).json({ message: "Invalid JSON" });
+  }
+
   if (err instanceof HttpError) {
     return res.status(err.status).json({
       message: err.message || err.name,
