@@ -14,7 +14,7 @@ export const registerUser = async (req, res, next) => {
     const normalizedName = name.trim();
     const normalizedPhone = phone.trim();
 
-    if (normalizedName.length < 2 || normalizedName.length > 32) {
+    if (normalizedName.length < 3 || normalizedName.length > 32) {
       throw createHttpError(400, 'Invalid name');
     }
 
