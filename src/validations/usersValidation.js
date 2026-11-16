@@ -3,12 +3,23 @@ import { uaPhone } from './phoneValidation.js';
 
 export const registerUserSchema = {
   [Segments.BODY]: Joi.object({
-    name: Joi.string().trim().min(2).max(32).required(),
+    name: Joi.string()
+      .trim()
+      .min(3)
+      .max(32)
+      .pattern(/^[\p{Script=Latin}\p{Script=Cyrillic}0-9]+$/u)
+      .required()
+      .messages({ 'string.pattern.base': "Ім'я може містити лише літери та цифри" }),
     phone: Joi.string()
       .trim()
       .pattern(/^\+38\d{10}$/)
       .required(),
-    password: Joi.string().min(8).max(128).required(),
+    password: Joi.string()
+      .min(8)
+      .max(128)
+      .pattern(/^[A-Za-z0-9]+$/)
+      .required()
+      .messages({ 'string.pattern.base': 'Пароль може містити лише латинські літери та цифри' }),
   }),
 };
 
