@@ -521,7 +521,7 @@ components:
         - type: object
           properties:
             _id: { $ref: '#/components/schemas/ObjectId' }
-            number: { type: string, description: Унікальний ідентифікатор замовлення }
+            number: { type: string, example: K7Q2M9XA, description: Унікальний номер замовлення з 8 символів (цифри та великі латинські літери) }
             total: { type: number, example: 2998 }
             status: { type: string, example: pending }
             items:
