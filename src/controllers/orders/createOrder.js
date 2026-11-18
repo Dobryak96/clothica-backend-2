@@ -1,8 +1,24 @@
 import createHttpError from "http-errors";
 import { isValidObjectId } from "mongoose";
+import { customAlphabet } from "nanoid";
 import { GoodModel } from "../../models/good.js";
 import { OrderModel } from "../../models/order.js";
 import { Session } from "../../models/session.js";
+
+const generateOrderNumber = customAlphabet("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", 8);
+const MAX_NUMBER_ATTEMPTS = 5;
+
+const saveWithUniqueNumber = async (order) => {
+  for (let attempt = 1; ; attempt += 1) {
+    order.number = generateOrderNumber();
+    try {
+      return await order.save();
+    } catch (error) {
+      const isDuplicateNumber = error?.code === 11000 && error?.keyPattern?.number;
+      if (!isDuplicateNumber || attempt >= MAX_NUMBER_ATTEMPTS) throw error;
+    }
+  }
+};
 
 const getUserIdFromSession = async (req) => {
   const { accessToken, sessionId } = req.cookies ?? {};
@@ -58,8 +74,7 @@ export const createOrder = async (req, res, next) => {
       user: userId,
     });
 
-    order.number = order._id.toString();
-    await order.save();
+    await saveWithUniqueNumber(order);
 
     res.status(201).json(order);
   } catch (error) {
