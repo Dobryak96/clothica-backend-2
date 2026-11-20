@@ -5,7 +5,16 @@ import { Session } from "../../models/session.js";
 import { createSession, setSessionCookies } from "../../services/auth.js";
 
 export const loginUser = async (req, res) => {
-  const { phone, password } = req.body;
+  const { phone, password } = req.body || {};
+
+  if (
+    typeof phone !== "string" ||
+    typeof password !== "string" ||
+    !phone.trim() ||
+    !password
+  ) {
+    throw createHttpError(400, "Phone and password are required");
+  }
 
   const user = await UserModel.findOne({ phone });
   if (!user) {
